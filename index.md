@@ -28,7 +28,7 @@ features:
 
   - icon: 📝
     title: Snippets
-    details: Готовые решения: JS, PHP, Twig
+    details: "Готовые решения: JS, PHP, Twig"
     link: /snippets/js
 
   - icon: 🐧
