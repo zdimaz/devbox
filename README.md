@@ -50,28 +50,46 @@ devbox/
 # Название
 
 ## 🧠 Суть
+
 Коротко что это и зачем
 
 ## ⚙️ Как использовать
+
 Шаги / команды
 
 ## 💻 Код
+
 \`\`\`js
 // example
 \`\`\`
 
 ## ⚠️ Подводные камни
+
 - проблема 1
 - проблема 2
 
 ## 🚀 Best Practice
+
 ...
 
 ## 🔗 Связанные темы
+
 - [ссылка](/путь)
 ```
 
-3. Добавь ссылку в sidebar (`.vitepress/config.js`)
+3. **(необязательно)** Добавь в sidebar для навигации:
+
+```js
+// .vitepress/config.js
+'/frontend/': [
+  { text: 'Vite Config', link: '/frontend/vite' },
+  { text: 'Моя страница', link: '/frontend/fonts' },  // ← добавь сюда
+]
+```
+
+> **Без sidebar** страница тоже работает. Просто не будет видна в меню.
+> Прямая ссылка: `http://localhost:5173/frontend/fonts`
+
 4. Закоммить:
 
 ```bash
@@ -101,6 +119,7 @@ git push -u origin main
 ### 2. Workflow сделает всё сам
 
 После push на `main`:
+
 - автоматическая сборка
 - деплой на GitHub Pages
 - ссылка: `https://yourusername.github.io/devbox/`
