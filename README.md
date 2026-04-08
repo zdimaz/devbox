@@ -112,13 +112,16 @@ Changes:
 
 ```bash
 git remote add origin https://github.com/yourusername/devbox.git
-git branch -M main
-git push -u origin main
+git push -u origin master
 ```
 
-### 2. Workflow сделает всё сам
+### 2. Включить Pages
 
-После push на `main`:
+Settings → Pages → Source: **GitHub Actions**
+
+### 3. Workflow сделает всё сам
+
+После push на `master`:
 
 - автоматическая сборка
 - деплой на GitHub Pages
