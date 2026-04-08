@@ -111,7 +111,7 @@ Changes:
 ### 1. Создай репозиторий на GitHub
 
 ```bash
-git remote add origin https://github.com/yourusername/devbox.git
+git remote add origin https://github.com/zdimaz/devbox.git
 git push -u origin master
 ```
 
@@ -125,7 +125,7 @@ Settings → Pages → Source: **GitHub Actions**
 
 - автоматическая сборка
 - деплой на GitHub Pages
-- ссылка: `https://yourusername.github.io/devbox/`
+- ссылка: `https://zdimaz.github.io/devbox/`
 
 ### 3. Проверь настройки
 
@@ -156,7 +156,7 @@ Settings → Pages → Source: **GitHub Actions**
 
 ## 📱 Доступ с телефона
 
-- GitHub Pages сайт: `https://yourusername.github.io/devbox/`
+- GitHub Pages сайт: `https://zdimaz.github.io/devbox/`
 - GitHub repo: мобильная версия
 - Локально: `npm run docs:dev` → доступ по IP
 

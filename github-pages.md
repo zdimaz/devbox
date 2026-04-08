@@ -1,6 +1,7 @@
 # GitHub Pages Deploy
 
 ## 🧠 Суть
+
 Автоматический деплой документации на GitHub Pages при push.
 
 ## ⚙️ Как работает
@@ -16,7 +17,7 @@
 ### 1. Создай репозиторий на GitHub
 
 ```bash
-git remote add origin https://github.com/yourusername/devbox.git
+git remote add origin https://github.com/zdimaz/devbox.git
 git branch -M main
 git push -u origin main
 ```
@@ -30,6 +31,7 @@ Settings → Pages → Source: **GitHub Actions**
 После каждого push на `main` → авто-деплой.
 
 ## ⚠️ Подводные камни
+
 - Repo должно быть **public** для бесплатных Pages
 - Первый деплой может занять 1-2 минуты
 - Если кастомный домен → добавь `CNAME` в `.vitepress/dist/`
@@ -42,9 +44,11 @@ docs.yourdomain.com
 ```
 
 В DNS:
+
 ```
-CNAME  docs  →  yourusername.github.io
+CNAME  docs  →  zdimaz.github.io
 ```
 
 ## 🔗 Связанные темы
+
 - [Главная](/)
