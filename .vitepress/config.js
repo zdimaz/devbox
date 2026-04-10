@@ -25,6 +25,7 @@ export default {
         { text: "Структура проекта", link: "/frontend/project-structure" },
         { text: "Пути", link: "/frontend/paths" },
         { text: "CSS Функции", link: "/frontend/css-functions" },
+        { text: "Блокировка скролла", link: "/frontend/dialog-scroll-lock" },
         { text: "Autoprefixer", link: "/frontend/autoprefixer" },
         { text: "PurgeCSS", link: "/frontend/purgecss" },
         { text: "Миграция", link: "/frontend/migration" },
@@ -41,7 +42,14 @@ export default {
       ],
       "/linux/": [
         { text: "Arch Setup", link: "/linux/arch-setup" },
+        { text: "Основы Arch", link: "/linux/arch-basics" },
         { text: "Оптимизация", link: "/linux/optimization" },
+        { text: "Dev среда", link: "/linux/dev-environment" },
+        { text: "ZSH", link: "/linux/zsh" },
+        { text: "Шрифты (CLI)", link: "/linux/font-tools" },
+        { text: "Изображения (CLI)", link: "/linux/image-tools" },
+        { text: "Игры", link: "/linux/gaming" },
+        { text: "Asus подсветка", link: "/linux/asus-backlight" },
       ],
       "/dev/": [
         { text: "Git", link: "/dev/git" },
