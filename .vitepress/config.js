@@ -21,6 +21,12 @@ export default {
         { text: "Изображения", link: "/frontend/images" },
         { text: "Шрифты", link: "/frontend/fonts" },
         { text: "Производительность", link: "/frontend/performance" },
+        { text: "Структура проекта", link: "/frontend/PROJECT-STRUCTURE" },
+        { text: "Пути", link: "/frontend/PATHS" },
+        { text: "CSS Функции", link: "/frontend/CSS-FUNCTIONS" },
+        { text: "Autoprefixer", link: "/frontend/AUTOPREFIXER" },
+        { text: "PurgeCSS", link: "/frontend/purgecss" },
+        { text: "Миграция", link: "/frontend/MIGRATION" },
       ],
       "/craft/": [
         { text: "Структура", link: "/craft/structure" },
