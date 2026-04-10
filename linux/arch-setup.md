@@ -6,7 +6,7 @@
 ## ⚙️ Базовая установка
 
 ```bash
-# Разметка (UEFI)
+# Разметка (UEFI)св
 parted /dev/sda mklabel gpt
 parted /dev/sda mkpart primary fat32 1MiB 513MiB
 parted /dev/sda mkpart primary ext4 513MiB 100%
