@@ -13,6 +13,7 @@ export default {
       { text: "Craft CMS", link: "/craft/structure" },
       { text: "Snippets", link: "/snippets/js" },
       { text: "Linux", link: "/linux/arch-setup" },
+      { text: "Dev", link: "/dev/git" },
     ],
 
     sidebar: {
@@ -21,12 +22,12 @@ export default {
         { text: "Изображения", link: "/frontend/images" },
         { text: "Шрифты", link: "/frontend/fonts" },
         { text: "Производительность", link: "/frontend/performance" },
-        { text: "Структура проекта", link: "/frontend/PROJECT-STRUCTURE" },
-        { text: "Пути", link: "/frontend/PATHS" },
-        { text: "CSS Функции", link: "/frontend/CSS-FUNCTIONS" },
-        { text: "Autoprefixer", link: "/frontend/AUTOPREFIXER" },
+        { text: "Структура проекта", link: "/frontend/project-structure" },
+        { text: "Пути", link: "/frontend/paths" },
+        { text: "CSS Функции", link: "/frontend/css-functions" },
+        { text: "Autoprefixer", link: "/frontend/autoprefixer" },
         { text: "PurgeCSS", link: "/frontend/purgecss" },
-        { text: "Миграция", link: "/frontend/MIGRATION" },
+        { text: "Миграция", link: "/frontend/migration" },
       ],
       "/craft/": [
         { text: "Структура", link: "/craft/structure" },
@@ -41,6 +42,11 @@ export default {
       "/linux/": [
         { text: "Arch Setup", link: "/linux/arch-setup" },
         { text: "Оптимизация", link: "/linux/optimization" },
+      ],
+      "/dev/": [
+        { text: "Git", link: "/dev/git" },
+        { text: "Docker", link: "/dev/docker" },
+        { text: "Bash Aliases", link: "/dev/bash-aliases" },
       ],
     },
 

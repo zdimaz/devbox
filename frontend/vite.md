@@ -1,74 +1,84 @@
 # Vite Config
 
 ## 🧠 Суть
-Базовый конфиг Vite для frontend-проектов. Быстрый старт, hot reload, оптимизация.
 
-## ⚙️ Базовый конфиг
+Базовый конфиг Vite. Объясняю каждую опцию.
+
+## ⚙️ Минимальный конфиг
 
 ```js
 // vite.config.js
-import { defineConfig } from 'vite'
-import { resolve } from 'path'
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: './src',
   build: {
-    outDir: '../dist',
-    rollupOptions: {
-      input: resolve(__dirname, 'src/main.js')
-    }
+    outDir: "dist", // куда собирать
+    sourcemap: true, // для отладки
+    minify: "terser", // сжатие JS
   },
   server: {
-    open: true,
-    port: 3000
-  }
-})
+    open: true, // авто-открытие браузера
+    port: 3000,
+  },
+});
 ```
 
-## 💻 Мульти-entry (для Craft CMS)
+**Пояснения:**
+
+- `outDir` — относительно `root` (по умолчанию `.`). Не нужен `../`
+- `sourcemap` — полезен в деве, в проде можно `false`
+- `minify` — `'esbuild'` (дефолт) быстрее, `'terser'` лучше сжимает
+
+## ⚙️ Мульти-entry (несколько точек входа)
+
+Когда нужно несколько JS-файлов — для разных страниц или бандлов:
 
 ```js
-// vite.config.js
-import { defineConfig } from 'vite'
-import { resolve } from 'path'
+import { defineConfig } from "vite";
+import { resolve } from "path";
 
 export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'src/main.js'),
-        admin: resolve(__dirname, 'src/admin.js')
+        main: resolve(__dirname, "src/main.js"),
+        admin: resolve(__dirname, "src/admin.js"),
       },
       output: {
-        entryFileNames: '[name].js',
-        chunkFileNames: 'chunks/[name].[hash].js',
-        assetFileNames: 'assets/[name].[ext]'
-      }
-    }
-  }
-})
+        entryFileNames: "[name].js",
+        chunkFileNames: "chunks/[name].[hash].js",
+      },
+    },
+  },
+});
 ```
 
-## ⚠️ Подводные камни
-- Craft CMS не понимает ES modules из коробки → используй `build.manifest`
-- При proxy на dev-сервере нужен `server.origin`
-- Пути к ассетам должны быть абсолютными
+**Пояснения:**
 
-## 🚀 Best Practice
+- `__dirname` — глобальная Node.js переменная, путь к текущей директории конфига
+- `resolve(__dirname, 'src/main.js')` → абсолютный путь `/твой/проект/src/main.js`
+- Без абсолютного пути — Rollup не найдёт файлы
+
+## ⚙️ Для Craft CMS
+
+Craft читает `manifest.json` → получает пути к собранным файлам:
 
 ```js
 export default defineConfig({
   build: {
-    manifest: true, // для Twig integration
-    minify: 'terser',
-    sourcemap: true
+    manifest: true, // создаёт manifest.json для Twig
+    outDir: "web/dist", // публичная папка Craft
   },
-  plugins: [
-    // добавить по необходимости
-  ]
-})
+});
 ```
 
+## ⚠️ Подводные камни
+
+- `manifest: true` обязателен для Craft — иначе Twig не найдёт бандлы
+- При прокси на дев-сервере добавь `server.origin`
+- Пути в `input` — только абсолютные
+
 ## 🔗 Связанные темы
-- [Оптимизация изображений](/frontend/images)
-- [Шрифты](/frontend/fonts)
+
+- [Структура проекта](/frontend/project-structure)
+- [Пути](/frontend/paths)

@@ -1,34 +1,52 @@
 # Шрифты
 
 ## 🧠 Суть
-Оптимизация загрузки шрифтов: woff2, preload, font-display.
 
-## 💻 Preload
+Правильная загрузка шрифтов: woff2, preload, font-display.
+
+## ⚙️ Preload критичных шрифтов
 
 ```html
-<link rel="preload" href="/fonts/main.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/main.woff2" as="font" type="font/woff2" crossorigin />
 ```
 
-## 💻 font-display
+**Пояснения:**
+
+- `as="font"` — обязательно для шрифтов
+- `crossorigin` — нужен даже для своих шрифтов
+- Preload только для шрифтов первого экрана
+
+## 💻 @font-face
 
 ```css
 @font-face {
-  font-family: 'Inter';
-  src: url('/fonts/inter.woff2') format('woff2');
+  font-family: "Inter";
+  src: url("/fonts/inter.woff2") format("woff2");
   font-display: swap;
 }
 ```
 
+**font-display значения:**
+
+- `auto` — дефолт, браузер сам решает
+- `block` — текст невидим пока шрифт не загрузится (FOIT)
+- `swap` — показывается системный шрифт, потом подменяется (FOUT)
+- `optional` — как swap, но без подмены если шрифт ещё не загрузился
+
 ## ⚠️ Подводные камни
-- `font-display: swap` → FOUT (flash of unstyled text)
-- Не preload все шрифты → только critical
+
+- `font-display: swap` → FOUT (текст мигает при подмене)
+- Не preload все шрифты → только те что на первом экране
+- WOFF2 — единственный формат, остальные не нужны
 
 ## 🚀 Best Practice
-1. WOFF2 формат
-2. Preload для critical шрифтов
+
+1. Только WOFF2
+2. Preload для критичных шрифтов
 3. `font-display: swap`
-4. Subset для кириллицы
+4. Subset для кириллицы (меньше файл)
 
 ## 🔗 Связанные темы
+
 - [Vite Config](/frontend/vite)
 - [Производительность](/frontend/performance)

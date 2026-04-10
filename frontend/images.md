@@ -1,62 +1,86 @@
 # Оптимизация изображений
 
 ## 🧠 Суть
-Современные форматы (WebP, AVIF) + lazy loading = быстрая загрузка страниц.
 
-## ⚙️ Конвертация
+Современные форматы (webp, avif) + lazy loading = быстрая загрузка.
 
-### WebP (ImageMagick)
+## ⚙️ Установка
+
+### Конвертация в CLI
+
 ```bash
+# WebP (ImageMagick)
+sudo pacman -S imagemagick
 mogrify -format webp -quality 80 *.jpg
-```
 
-### AVIF (ffmpeg)
-```bash
+# AVIF (ffmpeg)
+sudo pacman -S ffmpeg
 ffmpeg -i input.jpg -c:v libaom-av1 -crf 30 output.avif
 ```
 
-### Пакетная конвертация (sharp)
+### Пакетная обработка (sharp)
+
 ```bash
+npm install -D sharp
+
+# или глобально
+npm i -g sharp-cli
+
+# Конвертация папки
 npx sharp-cli -i "src/images/*" -o "dist/images" -f webp -q 80
 ```
 
-## 💻 HTML implementation
+### Vite плагин
 
-```html
-<picture>
-  <source srcset="image.avif" type="image/avif">
-  <source srcset="image.webp" type="image/webp">
-  <img src="image.jpg" alt="description" loading="lazy" decoding="async">
-</picture>
+```bash
+npm i -D vite-plugin-image-optimizer
 ```
-
-## 💻 Vite plugin
 
 ```js
 // vite.config.js
-import image from 'vite-plugin-image-optimizer'
+import { defineConfig } from "vite";
+import image from "vite-plugin-image-optimizer";
 
 export default defineConfig({
   plugins: [
     image({
-      formats: ['webp', 'avif'],
-      quality: 80
-    })
-  ]
-})
+      formats: ["webp", "avif"],
+      quality: 80,
+    }),
+  ],
+});
 ```
 
+## 💻 HTML: тег picture
+
+```html
+<picture>
+  <source srcset="image.avif" type="image/avif" />
+  <source srcset="image.webp" type="image/webp" />
+  <img src="image.jpg" alt="описание" loading="lazy" decoding="async" />
+</picture>
+```
+
+**Пояснения:**
+
+- Браузер берёт первый поддерживаемый формат
+- `loading="lazy"` — загрузка при скролле
+- `decoding="async"` — не блокирует рендер
+
 ## ⚠️ Подводные камни
-- AVIF не поддерживается в Safari < 16 → всегда давай fallback
-- `loading="lazy"` не работает для изображений выше fold
-- Большие изображения → используй `decoding="async"`
+
+- AVIF нет в Safari < 16 → всегда давай fallback в jpg
+- `loading="lazy"` не для изображений выше fold (первый экран)
+- Большие изображения → обязательно `decoding="async"`
 
 ## 🚀 Best Practice
-1. Critical images (above fold) → preload
+
+1. Критичные изображения (выше fold) → preload
 2. Остальные → lazy + async decoding
-3. Всегда используй `<picture>` с fallback
+3. Всегда `<picture>` с fallback
 4. SVG для иконок и простой графики
 
 ## 🔗 Связанные темы
+
 - [Vite Config](/frontend/vite)
 - [Производительность](/frontend/performance)

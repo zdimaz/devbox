@@ -1,29 +1,47 @@
 # PurgeCSS
 
-Удаляет неиспользуемые CSS-правила, уменьшая размер файлов.
+## 🧠 Суть
 
-## Установка
+Удаляет неиспользуемые CSS-правила → меньше размер файлов.
+
+## ⚙️ Установка
 
 ```bash
-npm i --save-dev purgecss
+npm i -D purgecss
 ```
 
-## Базовое использование
+## 💻 Базовое использование
 
 ```js
-import PurgeCSS from "purgecss";
+import { PurgeCSS } from "purgecss";
 
 const results = await new PurgeCSS().purge({
-  content: ["**/*.html"],
-  css: ["**/*.css"],
+  content: ["src/**/*.html", "src/**/*.js"], // где ищем классы
+  css: ["src/**/*.css"], // что чистим
+  keyframes: true, // сохраняем @keyframes
+  fontFace: true, // сохраняем @font-face
+  variables: true, // сохраняем CSS переменные (--var)
 });
 ```
 
-Результат — массив объектов `{ file, css }` с очищенным CSS.
+## 💻 Safelist (исключения)
 
-## Интеграция в Vite
+Классы которые НЕ удалять — для динамических (JS, carousel):
 
 ```js
+safelist: {
+  standard: [
+    'active', 'show', 'open',
+    /^col-/, /^order-/        // regex для всех вариантов
+  ],
+  greedy: [/^embla/, /^carousel/]  // даже в составных селекторах
+}
+```
+
+## 💻 Vite плагин
+
+```js
+// vite.config.js
 import { PurgeCSS } from "purgecss";
 import fs from "fs";
 import path from "path";
@@ -31,87 +49,34 @@ import path from "path";
 function purgecssPlugin() {
   return {
     name: "purgecss",
-    async buildStart() {
-      const outputDir = path.resolve(__dirname, "css-purged");
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-      }
-
+    async closeBundle() {
       const results = await new PurgeCSS().purge({
-        content: ["**/*.html", "**/*.js"],
-        css: ["**/*.css"],
-      });
-
-      results.forEach((r) => {
-        if (r.file && r.css) {
-          const out = path.join(outputDir, path.basename(r.file));
-          fs.writeFileSync(out, r.css, "utf8");
-        }
+        content: ["dist/**/*.html", "dist/**/*.js"],
+        css: ["dist/assets/*.css"],
+        output: "dist/purged",
       });
     },
   };
 }
-```
 
-## Ключевые опции
-
-| Опция             | Зачем                                              |
-| ----------------- | -------------------------------------------------- |
-| `content`         | Файлы, где ищутся CSS-селекторы (HTML, JS)         |
-| `css`             | CSS-файлы для очистки                              |
-| `keyframes: true` | Сохраняет `@keyframes` даже без прямого упоминания |
-| `fontFace: true`  | Сохраняет `@font-face` правила                     |
-| `variables: true` | Сохраняет CSS custom properties (`--var`)          |
-| `safelist`        | Селекторы, которые нельзя удалять                  |
-
-## Safelist
-
-Для динамических классов (carousel, bootstrap, JS-манипуляции):
-
-```js
-safelist: {
-  standard: [
-    "active", "show", "open",
-    /^col-/, /^order-/          // regex покрит все варианты
-  ],
-  greedy: [/^embla/, /^carousel/] // жадное совпадение
-}
-```
-
-- **standard** — точное совпадение или regex
-- **greedy** — совпадение даже внутри составных селекторов (`.embla__slide`)
-
-## Конфиг Vite
-
-```js
 export default defineConfig({
   plugins: [purgecssPlugin()],
-  server: {
-    watch: {
-      ignored: ["**/css-purged/**"], // не перезагружать при изменении purged CSS
-    },
-  },
 });
 ```
 
-## Проверка размера
+## ⚠️ Подводные камни
 
-```json
-{
-  "scripts": {
-    "build:stats": "npm run build && echo '📊 Итоговый размер:' && du -sh dist/assets/*.css 2>/dev/null || true"
-  }
-}
-```
+- PurgeCSS не видит классы добавленные через JS → safelist
+- Не чисти CSS модули — они уже изолированы
+- Проверяй результат — можно удалить нужные стили
 
-```bash
-npm run build:stats
-```
+## 🚀 Best Practice
 
-## Почему не `vite-plugin-purgecss`
+1. UnoCSS/Tailwind → уже встроен tree-shaking, PurgeCSS не нужен
+2. Обычный CSS → PurgeCSS полезен
+3. Всегда проверяй safelist
 
-`purgecss` как библиотека даёт полный контроль:
+## 🔗 Связанные темы
 
-- Чистит CSS **до** билда Vite
-- Пишет файлы в отдельную папку
-- Не конфликтует с CSS-обработчиками Vite
+- [CSS Функции](/frontend/css-functions)
+- [Autoprefixer](/frontend/autoprefixer)
