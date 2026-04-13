@@ -1,6 +1,8 @@
 node_modules/
 .vitepress/cache/
 .vitepress/dist/
+.vitepress/.temp/
 .DS_Store
 *.local
 .env
+.qwen/

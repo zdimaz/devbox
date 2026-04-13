@@ -1,6 +1,13 @@
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+import { getNav, getSidebar } from "./nav-helper.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 export default {
   title: "DevBox",
   description: "Personal knowledge base & dev platform",
+  srcDir: resolve(__dirname, "../templates"),
   base: "/devbox/",
 
   head: [["link", { rel: "icon", href: "/devbox/favicon.ico" }]],
@@ -8,55 +15,8 @@ export default {
   themeConfig: {
     logo: "📦",
 
-    nav: [
-      { text: "Frontend", link: "/frontend/vite" },
-      { text: "Craft CMS", link: "/craft/structure" },
-      { text: "Snippets", link: "/snippets/js" },
-      { text: "Linux", link: "/linux/arch-setup" },
-      { text: "Dev", link: "/dev/git" },
-    ],
-
-    sidebar: {
-      "/frontend/": [
-        { text: "Vite Config", link: "/frontend/vite" },
-        { text: "Изображения", link: "/frontend/images" },
-        { text: "Шрифты", link: "/frontend/fonts" },
-        { text: "Производительность", link: "/frontend/performance" },
-        { text: "Структура проекта", link: "/frontend/project-structure" },
-        { text: "Пути", link: "/frontend/paths" },
-        { text: "CSS Функции", link: "/frontend/css-functions" },
-        { text: "Блокировка скролла", link: "/frontend/dialog-scroll-lock" },
-        { text: "Autoprefixer", link: "/frontend/autoprefixer" },
-        { text: "PurgeCSS", link: "/frontend/purgecss" },
-        { text: "Миграция", link: "/frontend/migration" },
-      ],
-      "/craft/": [
-        { text: "Структура", link: "/craft/structure" },
-        { text: "Twig Best Practices", link: "/craft/twig" },
-        { text: "Компоненты", link: "/craft/components" },
-      ],
-      "/snippets/": [
-        { text: "JavaScript", link: "/snippets/js" },
-        { text: "PHP", link: "/snippets/php" },
-        { text: "Twig", link: "/snippets/twig" },
-      ],
-      "/linux/": [
-        { text: "Arch Setup", link: "/linux/arch-setup" },
-        { text: "Основы Arch", link: "/linux/arch-basics" },
-        { text: "Оптимизация", link: "/linux/optimization" },
-        { text: "Dev среда", link: "/linux/dev-environment" },
-        { text: "ZSH", link: "/linux/zsh" },
-        { text: "Шрифты (CLI)", link: "/linux/font-tools" },
-        { text: "Изображения (CLI)", link: "/linux/image-tools" },
-        { text: "Игры", link: "/linux/gaming" },
-        { text: "Asus подсветка", link: "/linux/asus-backlight" },
-      ],
-      "/dev/": [
-        { text: "Git", link: "/dev/git" },
-        { text: "Docker", link: "/dev/docker" },
-        { text: "Bash Aliases", link: "/dev/bash-aliases" },
-      ],
-    },
+    nav: getNav(),
+    sidebar: getSidebar(),
 
     search: {
       provider: "local",

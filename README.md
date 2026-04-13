@@ -30,20 +30,27 @@ npm run docs:preview
 
 ```
 devbox/
-├── index.md              # Главная страница
-├── frontend/             # Vite, изображения, шрифты, performance
-├── craft/                # Craft CMS: структура, Twig, компоненты
-├── snippets/             # Готовые решения: JS, PHP, Twig
-├── linux/                # Arch setup, оптимизация
-├── templates/            # Стартовые шаблоны
-└── .vitepress/           # Конфиг VitePress
+├── templates/            # Весь контент (.md файлы)
+│   ├── index.md          # Главная страница
+│   ├── dev/              # Dev: Tools, Frontend
+│   │   ├── tools/        # Bash Aliases, Git, Docker, PHP
+│   │   └── frontend/     # Assets, Build, CSS, JS
+│   ├── craft/            # Craft CMS: структура, Twig, компоненты
+│   └── linux/            # Arch setup, оптимизация
+├── .vitepress/           # Конфиг и утилиты навигации
+│   ├── config.js         # Импорт динамической навигации
+│   └── nav-helper.js     # Авто-генерация sidebar из файловой структуры
+├── .github/workflows/    # CI/CD для GitHub Pages
+└── package.json
 ```
+
+Навигация генерируется **динамически** — добавление нового `.md` файла в `templates/` автоматически обновляет sidebar.
 
 ---
 
 ## 📝 Как добавить новую страницу
 
-1. Создай файл в нужной папке, например `frontend/fonts.md`
+1. Создай файл в нужной папке, например `templates/dev/frontend/fonts.md`
 2. Используй стандартный формат:
 
 ```markdown
@@ -74,21 +81,11 @@ devbox/
 
 ## 🔗 Связанные темы
 
-- [ссылка](/путь)
+- [ссылка](/dev/frontend/fonts)
 ```
 
-3. **(необязательно)** Добавь в sidebar для навигации:
-
-```js
-// .vitepress/config.js
-'/frontend/': [
-  { text: 'Vite Config', link: '/frontend/vite' },
-  { text: 'Моя страница', link: '/frontend/fonts' },  // ← добавь сюда
-]
-```
-
-> **Без sidebar** страница тоже работает. Просто не будет видна в меню.
-> Прямая ссылка: `http://localhost:5173/frontend/fonts`
+3. **Готово!** Sidebar обновится автоматически — навигация генерируется из файловой структуры.
+   Прямая ссылка: `http://localhost:5173/dev/frontend/fonts`
 
 4. Закоммить:
 
@@ -130,6 +127,8 @@ Settings → Pages → Source: **GitHub Actions**
 ### 3. Проверь настройки
 
 Settings → Pages → Source: **GitHub Actions**
+
+Всё работает автоматически — workflow собирает сайт из `templates/` и деплоит на GitHub Pages.
 
 ---
 

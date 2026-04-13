@@ -10,7 +10,7 @@
 2. GitHub Actions запускает workflow
 3. Собирает VitePress (`npm run docs:build`)
 4. Деплоит на GitHub Pages
-5. Сайт доступен по `https://username.github.io/devbox/`
+5. Сайт доступен по `https://zdimaz.github.io/devbox/`
 
 ## 💻 Setup
 
