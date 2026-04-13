@@ -124,9 +124,11 @@ function buildSidebarTree(section) {
     if (node._files) {
       for (const file of node._files) {
         const absPath = join(ROOT, section, file);
+        const linkPath = file.replace(/\.md$/, "");
+        const fallback = linkPath.split("/").pop().replace(/-/g, " ");
         items.push({
-          text: extractTitle(absPath) || toLabel(relative(section, file).replace(/\.md$/, "")),
-          link: `/${section}/${file}`,
+          text: extractTitle(absPath) || fallback.charAt(0).toUpperCase() + fallback.slice(1),
+          link: `/${section}/${linkPath}`,
         });
       }
     }
