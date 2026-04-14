@@ -5,7 +5,7 @@ import { getNav, getSidebar } from "./nav-helper.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
-  title: "DevBox",
+  title: "DDI/DevBox",
   description: "Personal knowledge base & dev platform",
   srcDir: resolve(__dirname, "../templates"),
 

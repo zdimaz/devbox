@@ -64,10 +64,10 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
 
 `--depth=1` — скачать только последний коммит (быстрее).
 
-В `~/.zshrc`:
+В `~/.zshrc` добавь:
 
 ```bash
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# Powerlevel10k подключается автоматически при наличии в ZSH_CUSTOM
 ```
 
 После — `p10k configure` для настройки внешнего вида.

@@ -1,7 +1,7 @@
 ---
 layout: home
 hero:
-  name: "DevBox"
+  name: "DDI/DevBox"
   text: "Knowledge Base & Dev Platform"
   tagline: Личная база знаний + готовые решения для разработки
   image:
