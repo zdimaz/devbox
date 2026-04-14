@@ -76,6 +76,27 @@ export default defineConfig({
 });
 ```
 
+## ⚙️ vite-plugin-image-optimizer
+
+```js
+import { defineConfig } from "vite";
+import image from "vite-plugin-image-optimizer";
+
+export default defineConfig({
+  plugins: [
+    image({
+      quality: 80,
+    }),
+  ],
+});
+```
+
+**Важно:** плагин работает **только при `build`**. При `dev` — ничего не делает, картинки отдаются как есть.
+
+Это плагин **сжатия**, а не конвертации. Файлы остаются в своём формате (png→png, webp→webp), просто теряют ~10% веса.
+
+`formats` — опция **не работает** в этом плагине, её нужно убрать.
+
 ## ⚠️ Подводные камни
 
 - `manifest: true` обязателен для Craft — иначе Twig не найдёт бандлы
