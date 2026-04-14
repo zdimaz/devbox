@@ -8,9 +8,11 @@ export default {
   title: "DevBox",
   description: "Personal knowledge base & dev platform",
   srcDir: resolve(__dirname, "../templates"),
-  base: "/devbox/",
 
-  head: [["link", { rel: "icon", href: "/devbox/favicon.ico" }]],
+  head: [
+    ["link", { rel: "icon", href: "/favicon.ico" }],
+    ["link", { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
+  ],
 
   themeConfig: {
     logo: "📦",
@@ -31,7 +33,7 @@ export default {
 
     footer: {
       message: "Built with VitePress",
-      copyright: "© 2026 DevBox",
+      copyright: "© 2026 DDI/DevBox",
     },
   },
 };
