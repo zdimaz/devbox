@@ -1,3 +1,7 @@
+---
+title: Arch Linux — основы
+---
+
 # Arch Linux — основы
 
 ## 🧠 Суть
