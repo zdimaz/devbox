@@ -1,5 +1,5 @@
 ---
-title: "CSS Функции"
+title: "CSS Функции (theme / @screen)"
 ---
 
 # CSS Функции (UnoCSS)

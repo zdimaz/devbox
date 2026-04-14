@@ -1,3 +1,7 @@
+---
+title: Arch Linux Setup
+---
+
 # Arch Linux Setup
 
 ## 🧠 Суть
