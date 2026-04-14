@@ -23,9 +23,16 @@ export default {
     nav: getNav(),
     sidebar: getSidebar(),
 
-    search: {
-      provider: "local",
-    },
+    search: process.env.ALGOLIA_APP_ID
+      ? {
+          provider: "algolia",
+          options: {
+            appId: process.env.ALGOLIA_APP_ID,
+            apiKey: process.env.ALGOLIA_SEARCH_KEY,
+            indexName: "devbox",
+          },
+        }
+      : { provider: "local" },
 
     socialLinks: [{ icon: "github", link: "https://github.com/zdimaz/devbox" }],
 
