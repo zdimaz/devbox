@@ -16,8 +16,9 @@ const ROOT = join(__dirname, "..", "templates");
  */
 const LABEL_MAP = {
   frontend: "Frontend",
+  wordpress: "WordPress",
+  "craft-cms": "Craft CMS",
   tools: "Tools",
-  craft: "Craft CMS",
   linux: "Linux",
   css: "CSS",
   build: "Build",
@@ -26,6 +27,12 @@ const LABEL_MAP = {
   php: "PHP",
   arch: "Arch",
 };
+
+/**
+ * Явный порядок секций в навигации.
+ * Секции не из списка добавляются в конец автоматически.
+ */
+const SECTION_ORDER = ["frontend", "wordpress", "craft-cms", "tools", "linux"];
 
 function toLabel(name) {
   return LABEL_MAP[name] || name.charAt(0).toUpperCase() + name.slice(1).replace(/-/g, " ");
@@ -37,9 +44,18 @@ function toLabel(name) {
  */
 function findSections() {
   const entries = readdirSync(ROOT).filter((e) => !e.startsWith("."));
-  return entries
+  const sections = entries
     .filter((e) => statSync(join(ROOT, e)).isDirectory())
     .filter((e) => collectMarkdown(join(ROOT, e), join(ROOT, e)).length > 0);
+
+  return sections.sort((a, b) => {
+    const ai = SECTION_ORDER.indexOf(a);
+    const bi = SECTION_ORDER.indexOf(b);
+    if (ai === -1 && bi === -1) return 0;
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
 }
 
 /**
