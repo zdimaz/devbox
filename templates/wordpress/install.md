@@ -113,33 +113,123 @@ define('NONCE_KEY',        'уникальная строка');
 
 ### На сервере (Ubuntu + Nginx)
 
+#### 1. Установка стека
+
 ```bash
-# Nginx конфиг /etc/nginx/sites-available/my-site.com
+# Обновить пакеты
+apt update && apt upgrade -y
+
+# Nginx
+apt install -y nginx
+
+# MySQL
+apt install -y mysql-server
+mysql_secure_installation  # интерактивная настройка: пароль root, удалить тестовые БД
+
+# PHP 8.2 + расширения нужные для WordPress
+apt install -y php8.2-fpm php8.2-mysql php8.2-xml php8.2-curl \
+  php8.2-gd php8.2-mbstring php8.2-zip php8.2-intl php8.2-bcmath
+
+# Проверить что всё запущено
+systemctl status nginx
+systemctl status mysql
+systemctl status php8.2-fpm
+```
+
+#### 2. Создание БД и пользователя
+
+```bash
+mysql -u root -p
+
+# Создать БД — замени my_site на имя своего проекта
+CREATE DATABASE my_site CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+# Создать пользователя — замени wpuser и secret на свои
+# 'wpuser'@'localhost' — пользователь может подключаться только локально
+CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'secret';
+
+# Дать права только на эту БД — не давай GRANT ALL ON *.* (это права на все БД)
+GRANT ALL PRIVILEGES ON my_site.* TO 'wpuser'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+#### 3. Загрузка WordPress
+
+```bash
+# Создать папку сайта — замени my-site.com на домен
+mkdir -p /var/www/my-site.com
+cd /var/www/my-site.com
+
+# Скачать и распаковать WordPress
+wget https://wordpress.org/latest.tar.gz
+tar -xzf latest.tar.gz --strip-components=1  # распаковать содержимое без папки wordpress/
+rm latest.tar.gz
+
+# Права — www-data это пользователь от которого работает Nginx/PHP
+chown -R www-data:www-data /var/www/my-site.com
+find /var/www/my-site.com -type d -exec chmod 755 {} \;
+find /var/www/my-site.com -type f -exec chmod 644 {} \;
+```
+
+#### 4. wp-config.php
+
+```bash
+cp wp-config-sample.php wp-config.php
+nano wp-config.php
+```
+
+Заменить блок БД:
+
+```php
+define('DB_NAME',     'my_site');    // ← имя БД из шага 2
+define('DB_USER',     'wpuser');     // ← пользователь из шага 2
+define('DB_PASSWORD', 'secret');     // ← пароль из шага 2
+define('DB_HOST',     'localhost');  // не менять — MySQL на том же сервере
+```
+
+Соли — открой в браузере `https://api.wordpress.org/secret-key/1.1/salt/` и вставь весь блок вместо заглушек.
+
+На проде добавить:
+
+```php
+define('WP_DEBUG',        false);
+define('DISALLOW_FILE_EDIT', true);   // запрет редактора кода в админке
+```
+
+#### 5. Nginx конфиг
+
+```bash
+nano /etc/nginx/sites-available/my-site.com
+```
+
+```nginx
 server {
     listen 80;
-    server_name my-site.com www.my-site.com;  # ← поменяй домен
+    server_name my-site.com www.my-site.com;  # ← поменяй на свой домен
 
-    root /var/www/my-site;   # ← путь к файлам сайта
+    root /var/www/my-site.com;  # ← путь из шага 3
     index index.php;
 
-    # Стандартный роутинг WP — не трогай
+    # Стандартный роутинг WordPress — не трогай
+    # Сначала ищет файл, потом папку, потом отдаёт в index.php (ЧПУ)
     location / {
         try_files $uri $uri/ /index.php?$args;
     }
 
-    # PHP обработчик — поменяй версию PHP если нужно (php8.2, php8.1)
+    # PHP — поменяй версию если используешь не 8.2
     location ~ \.php$ {
         fastcgi_pass unix:/run/php/php8.2-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
     }
 
-    # Блокировка чувствительных файлов — не трогай
-    location ~* /(?:wp-config\.php|xmlrpc\.php) {
+    # Запретить прямой доступ к конфигам — не трогай
+    location ~* /(?:wp-config\.php|xmlrpc\.php|\.env) {
         deny all;
     }
 
-    # Статика — кэшировать на год
+    # Статика — браузер кэширует на год, не будет лишних запросов
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2)$ {
         expires 1y;
         add_header Cache-Control "public, immutable";
@@ -148,13 +238,34 @@ server {
 ```
 
 ```bash
-# Включить конфиг и перезапустить
+# Включить конфиг (симлинк в sites-enabled)
 ln -s /etc/nginx/sites-available/my-site.com /etc/nginx/sites-enabled/
-nginx -t && systemctl reload nginx
 
-# SSL через Let's Encrypt
-certbot --nginx -d my-site.com -d www.my-site.com
+# Проверить синтаксис — если ошибка, nginx скажет в какой строке
+nginx -t
+
+# Применить конфиг
+systemctl reload nginx
 ```
+
+#### 6. SSL (Let's Encrypt)
+
+```bash
+apt install -y certbot python3-certbot-nginx
+
+# Получить сертификат и автоматически обновить Nginx конфиг
+certbot --nginx -d my-site.com -d www.my-site.com
+
+# Автообновление сертификата — certbot сам добавляет cron, проверить:
+systemctl status certbot.timer
+```
+
+#### 7. Завершение установки
+
+Открой `https://my-site.com` в браузере — запустится визард WordPress:
+- Выбери язык
+- Введи название сайта, логин, пароль администратора, email
+- Нажми «Установить WordPress»
 
 ---
 
