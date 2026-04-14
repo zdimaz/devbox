@@ -4,15 +4,17 @@ import { getNav, getSidebar } from "./nav-helper.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const base = process.env.CF_PAGES ? "/" : "/devbox/";
+
 export default {
   title: "DDI/DevBox",
   description: "Personal knowledge base & dev platform",
-  base: "/devbox/",
+  base,
   srcDir: resolve(__dirname, "../templates"),
 
   head: [
-    ["link", { rel: "icon", href: "/devbox/favicon.ico" }],
-    ["link", { rel: "apple-touch-icon", sizes: "180x180", href: "/devbox/apple-touch-icon.png" }],
+    ["link", { rel: "icon", href: `${base}favicon.ico` }],
+    ["link", { rel: "apple-touch-icon", sizes: "180x180", href: `${base}apple-touch-icon.png` }],
   ],
 
   themeConfig: {
