@@ -1,25 +1,25 @@
 ---
-title: "Шрифты"
+title: "Fonts"
 ---
 
-# Шрифты
+# Fonts
 
-## 🧠 Суть
+## 🧠 Overview
 
-Правильная загрузка шрифтов: woff2, preload, font-display.
+Proper font loading: woff2, preload, font-display.
 
-## ⚙️ Preload критичных шрифтов
+## ⚙️ Preload Critical Fonts
 
 ```html
 <link rel="preload" href="/fonts/main.woff2" as="font" type="font/woff2" crossorigin />
 ```
 
-**Пояснения:**
+**Notes:**
 
-- `as="font"` — обязательно для шрифтов, без этого браузер проигнорирует preload
-- `type="font/woff2"` — помогает браузеру выбрать правильный приоритет загрузки
-- `crossorigin` — обязателен даже для своих шрифтов, иначе браузер скачает файл дважды (anonymous режим по умолчанию для шрифтов)
-- Preload только для шрифтов первого экрана — остальные загрузятся когда CSS их потребует
+- `as="font"` — required for fonts, without it the browser ignores the preload
+- `type="font/woff2"` — helps the browser assign the correct loading priority
+- `crossorigin` — required even for self-hosted fonts, otherwise the browser downloads the file twice (anonymous mode is default for fonts)
+- Preload only above-the-fold fonts — the rest will load when CSS requests them
 
 ## 💻 @font-face
 
@@ -31,22 +31,22 @@ title: "Шрифты"
 }
 ```
 
-**font-display значения:**
+**font-display values:**
 
-- `auto` — дефолт, браузер сам решает
-- `block` — текст невидим пока шрифт не загрузится (FOIT)
-- `swap` — показывается системный шрифт, потом подменяется (FOUT)
-- `optional` — как swap, но без подмены если шрифт ещё не загрузился
+- `auto` — default, browser decides
+- `block` — text is invisible until the font loads (FOIT)
+- `swap` — system font shown first, then swapped (FOUT)
+- `optional` — like swap, but no swap if font hasn't loaded in time
 
-## ⚠️ Подводные камни
+## ⚠️ Pitfalls
 
-- `font-display: swap` → FOUT (текст мигает при подмене)
-- Не preload все шрифты → только те что на первом экране
-- WOFF2 — единственный формат, остальные не нужны
+- `font-display: swap` → FOUT (text flashes on font swap)
+- Don't preload all fonts → only those above the fold
+- WOFF2 is the only format you need
 
 ## 🚀 Best Practice
 
-1. Только WOFF2
-2. Preload для критичных шрифтов
+1. WOFF2 only
+2. Preload critical fonts
 3. `font-display: swap`
-4. Subset для кириллицы (меньше файл)
+4. Subset for non-Latin scripts (smaller file size)
