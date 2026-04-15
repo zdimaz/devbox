@@ -16,6 +16,7 @@ const ROOT = join(__dirname, "..", "templates");
  */
 const LABEL_MAP = {
   frontend: "Frontend",
+  cms: "CMS",
   wordpress: "WordPress",
   "craft-cms": "Craft CMS",
   tools: "Tools",
@@ -32,7 +33,7 @@ const LABEL_MAP = {
  * Явный порядок секций в навигации.
  * Секции не из списка добавляются в конец автоматически.
  */
-const SECTION_ORDER = ["frontend", "wordpress", "craft-cms", "tools", "linux"];
+const SECTION_ORDER = ["frontend", "cms", "tools", "linux"];
 
 function toLabel(name) {
   return LABEL_MAP[name] || name.charAt(0).toUpperCase() + name.slice(1).replace(/-/g, " ");
