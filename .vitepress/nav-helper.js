@@ -18,11 +18,26 @@ const SECTIONS = [
 
 // Labels for sub-folders whose names can't be auto-derived correctly.
 const LABELS = {
+  // CMS
   "craft-cms": "Craft CMS",
   wordpress:   "WordPress",
-  css:         "CSS",
-  js:          "JavaScript",
-  php:         "PHP",
+
+  // Frontend
+  assets:  "Fonts & Images",
+  build:   "Vite & Build",
+  css:     "CSS",
+  html:    "HTML",
+  js:      "JavaScript",
+  unocss:  "UnoCSS",
+  vue:     "Vue",
+
+  // Tools
+  email:   "Email",
+  git:     "Git",
+  php:     "PHP",
+
+  // Linux
+  arch:    "Arch Linux",
 };
 
 function toLabel(name) {
