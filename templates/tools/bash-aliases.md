@@ -6,91 +6,77 @@ title: "Bash Aliases"
 
 ## 🧠 Суть
 
-Горячие команды для Docker, Deployer, SQL импорта.
+Горячие команды для Docker и деплоя. Функции сами читают `.env` при вызове — не нужно ничего грузить заранее.
+
+---
 
 ## ⚙️ Установка
 
 ```bash
 nano ~/.bash_aliases
-```
-
-Вставь алиасы, сохрани (Ctrl+O → Enter → Ctrl+X).
-
-```bash
 source ~/.bashrc
 ```
 
-**Разница `.bashrc` vs `.bash_aliases`:**
-
-- `.bashrc` — основной конфиг bash
-- `.bash_aliases` — подключается из `.bashrc` автоматически, удобней для структуры
-
-## 💻 Алиасы
-
-### Docker Compose
+Убедись что в `.bashrc` есть:
 
 ```bash
-dcb
-dcd
-dcu
+if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi
 ```
 
-- `dcb` — docker-compose up -d --build
-- `dcd` — docker-compose down
-- `dcu` — docker-compose up -d --build (альтернатива)
+---
 
-С аргументами (сервисы):
+## 💻 Готовый блок
 
 ```bash
-dcb redis
-dcd --volumes
+# ─── Docker Compose ───────────────────────────────────────────────────
+alias dcb='docker compose up -d --build'
+alias dcu='docker compose up -d'
+alias dcd='docker compose down'
+alias dcl='docker compose logs -f'
+
+# ─── Docker Exec ──────────────────────────────────────────────────────
+de-sh() {
+  local tag; tag=$([ -f .env ] && grep -m1 '^PROJECT_TAG=' .env | cut -d= -f2)
+  [ -z "$tag" ] && { echo "PROJECT_TAG не найден в .env"; return 1; }
+  docker exec -it "${tag}_web" /bin/sh
+}
+
+de-sql() {
+  local tag; tag=$([ -f .env ] && grep -m1 '^PROJECT_TAG=' .env | cut -d= -f2)
+  [ -z "$tag" ] && { echo "PROJECT_TAG не найден в .env"; return 1; }
+  local f="${1:-db.sql}"
+  [ ! -f "$f" ] && { echo "Файл '$f' не найден"; return 1; }
+  local pass; pass=$(grep -m1 '^MYSQL_ROOT_PASSWORD=' .env | cut -d= -f2)
+  docker exec -i "${tag}_mysql" mysql -uroot -p"${pass:-root}" dev < "$f"
+}
+
+# ─── Deploy ───────────────────────────────────────────────────────────
+alias dep-s='php vendor/bin/dep deploy staging'
+alias dep-p='php vendor/bin/dep deploy production'
+
+# ─── Misc ─────────────────────────────────────────────────────────────
+alias sp='sudo chmod -R 777 ./'
+alias cl='clear'
 ```
 
-### Войти в контейнер
+---
+
+## 💻 Использование
 
 ```bash
-# Функция: de-sql <project_tag> <db_name> <sql_file>
-de-sql myproject mydb dump.sql
+dcb              # docker compose up -d --build
+dcd              # docker compose down
+dcl              # логи в реальном времени
 
-# Или без аргументов (берёт из .env):
-de-sql
+de-sh            # войти в контейнер (берёт PROJECT_TAG из .env)
+de-sql           # импорт db.sql
+de-sql dump.sql  # импорт конкретного файла
 ```
 
-**Что делает:**
-
-1. Берёт `PROJECT_TAG` из `.env` или аргумента
-2. Импортирует `db.sql` в MySQL контейнер
-3. Показывает прогресс
-
-### Deployer (деплой)
-
-```bash
-dep-s
-dep-p
-dep-sa
-```
-
-- `dep-s` — deploy staging
-- `dep-p` — deploy production
-- `dep-sa` — deploy staging (из app/)
-
-### Разное
-
-```bash
-sp
-de-sh
-```
-
-- `sp` — sudo chmod -R 777 ./
-- `de-sh` — войти в контейнер (sh)
+---
 
 ## ⚠️ Подводные камни
 
-- `.bash_aliases` должен подключаться в `.bashrc`:
-  ```bash
-  if [ -f ~/.bash_aliases ]; then
-      . ~/.bash_aliases
-  fi
-  ```
-- Функции лучше алиасов — можно с аргументами
-- Пароль MySQL захардкожен → смени на свой
+- `docker-compose` (через дефис) — устарел, используй `docker compose`
+- `MYSQL_ROOT_PASSWORD` должен быть в `.env`, иначе fallback `root`
+- `de-sql` ищет файл относительно текущей папки — запускай из корня проекта
