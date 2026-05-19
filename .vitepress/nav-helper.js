@@ -11,33 +11,34 @@ const ROOT = join(__dirname, "..", "templates");
 // Folders not listed here are appended at the end automatically.
 const SECTIONS = [
   { id: "frontend", label: "Frontend" },
-  { id: "cms",      label: "CMS"      },
-  { id: "tools",    label: "Tools"    },
-  { id: "linux",    label: "Linux"    },
+  { id: "cms", label: "CMS" },
+  { id: "tools", label: "Tools" },
+  { id: "linux", label: "Linux" },
+  { id: "ai", label: "AI" },
 ];
 
 // Labels for sub-folders whose names can't be auto-derived correctly.
 const LABELS = {
   // CMS
   "craft-cms": "Craft CMS",
-  wordpress:   "WordPress",
+  wordpress: "WordPress",
 
   // Frontend
-  assets:  "Fonts & Images",
-  build:   "Vite & Build",
-  css:     "CSS",
-  html:    "HTML",
-  js:      "JavaScript",
-  unocss:  "UnoCSS",
-  vue:     "Vue",
+  assets: "Fonts & Images",
+  build: "Vite & Build",
+  css: "CSS",
+  html: "HTML",
+  js: "JavaScript",
+  unocss: "UnoCSS",
+  vue: "Vue",
 
   // Tools
-  email:   "Email",
-  git:     "Git",
-  php:     "PHP",
+  email: "Email",
+  git: "Git",
+  php: "PHP",
 
   // Linux
-  arch:    "Arch Linux",
+  arch: "Arch Linux",
 };
 
 function toLabel(name) {
@@ -105,7 +106,7 @@ function buildSidebarTree(section) {
       if (i === parts.length - 1) {
         (node._files ??= []).push(file);
       } else {
-        node = (node[parts[i]] ??= {});
+        node = node[parts[i]] ??= {};
       }
     }
   }
