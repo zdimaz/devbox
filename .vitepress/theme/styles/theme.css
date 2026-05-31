@@ -1,0 +1,22 @@
+:root {
+	--bg-line-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+	--bg-line-color: rgba(255, 255, 255, 0.05);
+}
+
+body {
+	/* @apply bg-grid bg-repeat; */
+	/* background-size: 80px 80px; */
+}
+
+.VPHome {
+	margin-bottom: 0 !important;
+}
+
+@media (min-width: 768px) {
+	.VPHome {
+		margin-bottom: 0 !important;
+	}
+}
