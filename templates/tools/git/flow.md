@@ -219,11 +219,12 @@ cat > ~/.git-commit-template << 'EOF'
 # [SCOPE] Title — до 72 символов
 # |<---- 72 символа ---------------------------------------------------->|
 
+[SCOPE]:
+
 Motivation:
 
-
 Changes:
--
+
 EOF
 
 git config --global commit.template ~/.git-commit-template
