@@ -45,8 +45,13 @@ const navGroups = [
 			<div class="flex flex-col items-start gap-y-6 gap-x-6 lg:gap-x-8 md:flex-row">
 				<div class="flex flex-col gap-y-4">
 					<VPTeamMembers size="small" :members />
-					<Badge type="tip" class="text-center p-0">
-						<a href="https://devddi.vercel.app/" target="_blank" rel="noreferrer" class="block"> Портфолио </a>
+					<Badge type="tip" class="text-center p-0 transition-property-opacity duration-300 hover:(opacity-80)">
+						<a href="https://ddi-portfolio.vercel.app/" target="_blank" rel="noreferrer" class="block">
+							Портфолио (new)</a
+						>
+					</Badge>
+					<Badge type="warning" class="text-center p-0 transition-property-opacity duration-300 hover:(opacity-80)">
+						<a href="https://devddi.vercel.app/" target="_blank" rel="noreferrer" class="block"> Портфолио (old)</a>
 					</Badge>
 				</div>
 
@@ -60,7 +65,7 @@ const navGroups = [
 										:href="link.link"
 										:target="link.target || '_self'"
 										:rel="link.target == '_blank' ? 'noreferrer' : undefined"
-										class="inline-flex items-center gap-x-2 text-3 text-[var(--vp-c-brand-1)] lg:text-4 hover:underline"
+										class="inline-flex items-center gap-x-2 text-3 text-[var(--vp-c-brand-1)] hover:(underline opacity-80) lg:text-4"
 									>
 										{{ link.text }}
 									</a>
