@@ -16,7 +16,6 @@ const { page, frontmatter } = useData(); // ← frontmatter — это сокр�
 			<!-- <div class="size-20 bg-green">
 				ГЛОБАЛЬНЫЙ БЛОК (показывается на всех страницах, где frontmatter.showGlobalBlock = true)
 			</div> -->
-			<AmbientGlow />
 		</template>
 
 		<!-- 📄 ТОЛЬКО ДОКА (doc — layout по умолчанию) -->
@@ -32,6 +31,7 @@ const { page, frontmatter } = useData(); // ← frontmatter — это сокр�
 			<!-- <div class="size-20 bg-red">БЛОК ТОЛЬКО ДЛЯ ГЛАВНОЙ (показывается только на странице с layout: home)</div> -->
 			<BaseFooter />
 			<div class="bg-grid bg-repeat bg-[length:60px_60px] fixed inset-0 z-[-1] pointer-events-none"></div>
+			<AmbientGlow />
 		</template>
 
 		<template #not-found v-if="page.isNotFound">
