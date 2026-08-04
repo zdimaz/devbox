@@ -59,23 +59,6 @@ plugins=(
 
 Подключение плагинов в `~/.zshrc`. `zsh-syntax-highlighting` должен быть **последним**.
 
-## 💻 Тема Powerlevel10k
-
-```bash
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-```
-
-`--depth=1` — скачать только последний коммит (быстрее).
-
-В `~/.zshrc` добавь:
-
-```bash
-# Powerlevel10k подключается автоматически при наличии в ZSH_CUSTOM
-```
-
-После — `p10k configure` для настройки внешнего вида.
-
 ## 💻 fzf (поиск)
 
 ```bash
