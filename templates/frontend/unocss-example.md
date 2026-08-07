@@ -81,7 +81,7 @@ UnoCSS установлен и готов к использованию! 🎉
 </div>
 ```
 
-<div class="p-4 bg-gray-100 rounded-lg">
+<div class="p-4 bg-blue-500 rounded-lg">
   <div class="text-center sm:text-left">
     <h2 class="text-lg font-semibold mb-2">Адаптивный блок</h2>
     <p class="text-sm sm:text-base">Этот текст центрируется на мобильных и слева на десктопе</p>
