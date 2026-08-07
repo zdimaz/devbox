@@ -47,8 +47,8 @@ const navGroups = [
 					<VPTeamMembers size="small" :members />
 					<Badge type="tip" class="text-center p-0 transition-property-opacity duration-300 hover:(opacity-80)">
 						<a href="https://ddi-portfolio.vercel.app/" target="_blank" rel="noreferrer" class="block">
-							Портфолио (new)</a
-						>
+							Портфолио 
+						</a>
 					</Badge>
 				</div>
 
