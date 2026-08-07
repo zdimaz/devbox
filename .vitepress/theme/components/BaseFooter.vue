@@ -50,9 +50,6 @@ const navGroups = [
 							Портфолио (new)</a
 						>
 					</Badge>
-					<Badge type="warning" class="text-center p-0 transition-property-opacity duration-300 hover:(opacity-80)">
-						<a href="https://devddi.vercel.app/" target="_blank" rel="noreferrer" class="block"> Портфолио (old)</a>
-					</Badge>
 				</div>
 
 				<nav v-if="navGroups.length > 0" class="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
