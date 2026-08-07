@@ -21,6 +21,17 @@ export default {
 	head: [
 		["link", { rel: "icon", href: `${base}favicon.ico` }],
 		["link", { rel: "apple-touch-icon", sizes: "180x180", href: `${base}apple-touch-icon.png` }],
+		[
+			"script",
+			{
+				type: "module",
+				src: "https://static.cloudflareinsights.com/beacon.min.js",
+				"data-cf-beacon": JSON.stringify({
+					token: "b8cf6ca607384a2daff31cdc3dd02c1",
+					spa: true,
+				}),
+			},
+		],
 	],
 
 	themeConfig: {

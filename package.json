@@ -11,5 +11,8 @@
 	"devDependencies": {
 		"unocss": "^65.4.3",
 		"vitepress": "^1.6.3"
+	},
+	"allowScripts": {
+		"esbuild@0.21.5": true
 	}
 }
