@@ -15,8 +15,6 @@ sudo pacman -Syu --noconfirm
 ```
 ## Альтернатива: временное исключение
 
-Если не хочешь менять конфиг:
-
 ```bash
 # Обновить только приложения (исключить систему)
 sudo pacman -Syu --ignore=linux-cachyos --ignore=linux-firmware --ignore=systemd
