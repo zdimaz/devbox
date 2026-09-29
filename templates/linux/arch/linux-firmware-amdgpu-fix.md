@@ -68,4 +68,6 @@ sudo reboot
 
 ---
 
+Issues: [Issues with linux-firmware-amdgpu 20260910-1](https://bbs.archlinux.org/viewtopic.php?id=314887 "Issues with linux-firmware-amdgpu 20260910-1")
+
 Всё — система вернется в рабочее состояние.
