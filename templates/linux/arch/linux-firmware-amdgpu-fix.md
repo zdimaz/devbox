@@ -10,7 +10,7 @@ title: Issues with linux-firmware-amdgpu 20260910-2
 
 ---
 
-### Понизь на рабочую версию
+## Понизь на рабочую версию
 
 Если в кеше есть:
 
@@ -24,7 +24,7 @@ sudo pacman -U /var/cache/pacman/pkg/linux-firmware-amdgpu-20260810-2-any.pkg.ta
 sudo pacman -S linux-firmware-amdgpu=20260810-2
 ```
 
-### Проверь
+## Проверь текущую версию
 
 ```bash
 pacman -Q linux-firmware-amdgpu
@@ -32,7 +32,7 @@ pacman -Q linux-firmware-amdgpu
 
 Должна быть версия **20260810-2**
 
-### Добавь IgnorePkg в /etc/pacman.conf
+## Добавь IgnorePkg в /etc/pacman.conf
 
 ```bash
 sudo nano /etc/pacman.conf
@@ -54,13 +54,13 @@ sudo pacman -Syu
 
 Должен увидеть предупреждение: linux-firmware-amdgpu: пропуск обновления пакета (20260810-2 => 1:20260916-1)
 
-### Удали lock файл (если база заблокирована)
+## Удали lock файл (если база заблокирована)
 
 ```bash
 sudo rm /var/lib/pacman/db.lck
 ```
 
-### Перезагрузись
+## Перезагрузись
 
 ```bash
 sudo reboot
